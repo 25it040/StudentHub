@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentHub</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Apply stored theme immediately to avoid flash -->
+    <script>if (localStorage.getItem("theme") === "dark") { document.documentElement.classList.add('dark-theme'); }</script>
+</head>
+
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header>
+        <img src="../image/image-removebg-preview.png" alt="StudentHub Official Portal Logo" width="100">
+        <h1>StudentHub</h1>
+        <p>Your Digital Campus Portal.</p>
+    </header>
+
+    <nav aria-label="StudentHub Main Navigation">
+        <button class="hamburger" aria-label="Toggle navigation menu">☰</button>
+        <div id="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="register_user.html">Register</a>
+            <a href="login.php">Login</a>
+            <a href="dashboard.php">Dashboard</a>
+            <a href="events.html">Events</a>
+            <a href="profile.html">Profile</a>
+            <a href="contact.html">Contact</a>
+            <a href="admin.php">Admin</a>
+            <a href="faq.html">FAQ</a>
+            <a href="feedback.html">Feedback</a>
+            <button id="theme-toggle" style="margin-left: 10px; padding: 8px 14px; font-weight: 600;">🌙 Dark Mode</button>
+        </div>
+    </nav>
+
+
+    <!-- Slider -->
+    <div class="slider" role="region" aria-label="Campus Highlights Carousel">
+        <div class="slider-track">
+            <div class="slide active">
+                <img src="../image/h1.jpg" alt="Web Development Workshop banner with programming laptops">
+                <div class="slide-caption">Featured: Web Development Workshop — Register Now</div>
+            </div>
+            <div class="slide">
+                <img src="../image/campus.jpg" alt="Students walking and collaborating on university campus">
+                <div class="slide-caption">Campus Life 2026 — Innovation in action</div>
+            </div>
+            <div class="slide">
+                <img src="../image/workshop.jpg" alt="Students attending interactive technical workshop">
+                <div class="slide-caption">Campus Registration Deadline Approaching</div>
+            </div>
+        </div>
+        <button class="slider-prev" aria-label="Previous slide">‹</button>
+        <button class="slider-next" aria-label="Next slide">›</button>
+    </div>
+
+    <main id="main-content">
+
+        <section>
+            <h2>Welcome to StudentHub.</h2>
+            <p>
+                StudentHub is a digital platform where all students can register,
+                participate in events, manage profiles, and access academic information.
+            </p>
+        </section>
+
+        <article>
+            <h3>Upcoming Workshop</h3>
+            <p>
+                A Web Development Workshop will be conducted next week.
+            </p>
+        </article>
+
+        <aside>
+            <h3>Latest Notices:</h3>
+            <ul>
+                <li>Lab submission is on Friday!</li>
+                <li>Workshop Registration open...</li>
+                <li>Hackathon is next month...</li>
+            </ul>
+            <p><button data-modal-title="Join Workshop" data-modal-content="Register for the Web Development workshop on Friday via your dashboard." style="margin-top:10px;padding:8px 12px;border-radius:8px;border:none;background:#2563eb;color:#fff;cursor:pointer;">More Info</button></p>
+        </aside>
+
+    </main>
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h2>🎓 StudentHub</h2>
+                <p>
+                    Your Digital Campus Portal for academics, events, and student life.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="events.html">Events</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="cookie-policy.html">Cookie Policy</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📧 smitmakwana6777@gmail.com</p>
+                <p>📞 +91 9998403012</p>
+                <p>📍 CHARUSAT University Campus, Changa, Gujarat - 388421</p>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <p class="copyright">
+            &copy; 2026 StudentHub | Designed by Smit Makwana
+        </p>
+    </footer>
+
+    <script src="../javascripts/scripts.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .register-wrapper {
+            max-width: 760px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        .register-wrapper h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1d2b42;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #dfe7f1;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .radio-group label,
+        .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-register {
+            width: 100%;
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .error {
+            display: block;
+            min-height: 18px;
+            margin-top: 6px;
+            font-size: 13px;
+            color: #dc2626;
+        }
+    </style>
+    <script>if (localStorage.getItem("theme") === "dark") { document.documentElement.classList.add('dark-theme'); }</script>
+</head>
+<body>
+    <header>
+        <img src="../image/image-removebg-preview.png" alt="StudentHub Logo" width="100">
+        <h1>Student Registration</h1>
+        <p>Join the StudentHub community today.</p>
+    </header>
+
+    <nav>
+        <button class="hamburger" aria-label="Toggle menu">☰</button>
+        <div id="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="register.html">Register</a>
+            <a href="login.html">Login</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="events.html">Events</a>
+            <a href="students.html">Students</a>
+            <a href="profile.html">Profile</a>
+            <a href="contact.html">Contact</a>
+            <a href="admin.html">Admin</a>
+            <a href="faq.html">FAQ</a>
+            <a href="feedback.html">Feedback</a>
+            <button id="theme-toggle" style="margin-left: 10px; padding: 8px 14px; font-weight: 600;">🌙 Dark Mode</button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="register-wrapper">
+            <h2>📝 Create Your Account</h2>
+
+            <form id="studentForm" action="../php/process_registration_db.php" method="POST" novalidate>
+                <div class="form-group">
+                    <label for="studentName">Name</label>
+                    <input type="text" id="studentName" name="studentName" placeholder="Enter your full name">
+                    <span id="studentNameError" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email">
+                    <span id="emailError" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="text" id="mobile" name="mobile" placeholder="Enter 10-digit mobile number">
+                    <span id="mobileError" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password">
+                    <span id="passwordError" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password">
+                    <span id="confirmPasswordError" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <select id="course" name="course">
+                        <option value="">Select a course</option>
+                        <option value="1">BCA</option>
+                        <option value="2">BSc</option>
+                        <option value="3">BTech</option>
+                        <option value="4">MBA</option>
+                    </select>
+                    <span id="courseError" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <select id="year" name="year">
+                        <option value="">Select year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                    <span id="yearError" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender" value="Male"> Male</label>
+                        <label><input type="radio" name="gender" value="Female"> Female</label>
+                        <label><input type="radio" name="gender" value="Other"> Other</label>
+                    </div>
+                    <span id="genderError" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" name="terms">
+                        <label for="terms">I am at least 16 years old and agree to the <a href="terms.html" target="_blank" style="color: #2563eb; text-decoration: underline;">Terms of Service</a> and <a href="privacy.html" target="_blank" style="color: #2563eb; text-decoration: underline;">Privacy Policy</a>.</label>
+                    </div>
+                    <span id="termsError" class="error"></span>
+                </div>
+
+                <button type="submit" class="btn-register">Register</button>
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="../php/view_registrations.php" style="color: #2563eb; text-decoration: none; font-weight: 600;">View all registrations</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h2>🎓 StudentHub</h2>
+                <p>Your Digital Campus Portal for academics, events, workshops, and student life.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="events.html">Events</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="cookie-policy.html">Cookie Policy</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📧 smitmakwana6777@gmail.com</p>
+                <p>📞 +91 9998403012</p>
+                <p>📍 CHARUSAT University Campus, Changa, Gujarat - 388421</p>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">&copy; 2026 StudentHub | Designed by Smit Makwana</p>
+    </footer>
+
+    <script src="../javascripts/scripts.js"></script>
+    <script>
+        var form = document.getElementById('studentForm');
+
+        function showError(id, message) {
+            var errorBox = document.getElementById(id);
+            errorBox.textContent = message;
+        }
+
+        function clearError(id) {
+            document.getElementById(id).textContent = '';
+        }
+
+        function validateStudentName() {
+            var studentName = document.getElementById('studentName').value.trim();
+            var pattern = /^[A-Za-z ]+$/;
+
+            if (studentName === '') {
+                showError('studentNameError', 'Name is required.');
+                return false;
+            }
+
+            if (!pattern.test(studentName)) {
+                showError('studentNameError', 'Name must contain letters and spaces only.');
+                return false;
+            }
+
+            clearError('studentNameError');
+            return true;
+        }
+
+        function validateEmail() {
+            var email = document.getElementById('email').value.trim();
+            var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (email === '') {
+                showError('emailError', 'Email is required.');
+                return false;
+            }
+
+            if (!pattern.test(email)) {
+                showError('emailError', 'Please enter a valid email.');
+                return false;
+            }
+
+            clearError('emailError');
+            return true;
+        }
+
+        function validateMobile() {
+            var mobile = document.getElementById('mobile').value.trim();
+            var pattern = /^[6-9][0-9]{9}$/;
+
+            if (mobile === '') {
+                showError('mobileError', 'Mobile number is required.');
+                return false;
+            }
+
+            if (!pattern.test(mobile)) {
+                showError('mobileError', 'Mobile number must be 10 digits and start with 6-9.');
+                return false;
+            }
+
+            clearError('mobileError');
+            return true;
+        }
+
+        function validatePassword() {
+            var password = document.getElementById('password').value;
+            var pattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            if (password === '') {
+                showError('passwordError', 'Password is required.');
+                return false;
+            }
+
+            if (!pattern.test(password)) {
+                showError('passwordError', 'Password must be at least 8 characters, include uppercase, lowercase, number, and special character.');
+                return false;
+            }
+
+            clearError('passwordError');
+            return true;
+        }
+
+        function validateConfirmPassword() {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (confirmPassword === '') {
+                showError('confirmPasswordError', 'Please confirm your password.');
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                showError('confirmPasswordError', 'Passwords do not match.');
+                return false;
+            }
+
+            clearError('confirmPasswordError');
+            return true;
+        }
+
+        function validateCourse() {
+            var course = document.getElementById('course').value;
+
+            if (course === '') {
+                showError('courseError', 'Please select a course.');
+                return false;
+            }
+
+            clearError('courseError');
+            return true;
+        }
+
+        function validateYear() {
+            var year = document.getElementById('year').value;
+
+            if (year === '') {
+                showError('yearError', 'Please select a year.');
+                return false;
+            }
+
+            clearError('yearError');
+            return true;
+        }
+
+        function validateGender() {
+            var selectedGender = document.querySelector('input[name="gender"]:checked');
+
+            if (!selectedGender) {
+                showError('genderError', 'Please select your gender.');
+                return false;
+            }
+
+            clearError('genderError');
+            return true;
+        }
+
+        function validateTerms() {
+            var checked = document.getElementById('terms').checked;
+
+            if (!checked) {
+                showError('termsError', 'You must accept the terms and conditions.');
+                return false;
+            }
+
+            clearError('termsError');
+            return true;
+        }
+
+        document.getElementById('studentName').addEventListener('input', validateStudentName);
+        document.getElementById('email').addEventListener('input', validateEmail);
+        document.getElementById('mobile').addEventListener('input', validateMobile);
+        document.getElementById('password').addEventListener('input', validatePassword);
+        document.getElementById('confirmPassword').addEventListener('input', validateConfirmPassword);
+        document.getElementById('course').addEventListener('change', validateCourse);
+        document.getElementById('year').addEventListener('change', validateYear);
+        document.querySelectorAll('input[name="gender"]').forEach(function (radio) {
+            radio.addEventListener('change', validateGender);
+        });
+        document.getElementById('terms').addEventListener('change', validateTerms);
+
+        form.addEventListener('submit', function (event) {
+            var isValid = true;
+
+            if (!validateStudentName()) isValid = false;
+            if (!validateEmail()) isValid = false;
+            if (!validateMobile()) isValid = false;
+            if (!validatePassword()) isValid = false;
+            if (!validateConfirmPassword()) isValid = false;
+            if (!validateCourse()) isValid = false;
+            if (!validateYear()) isValid = false;
+            if (!validateGender()) isValid = false;
+            if (!validateTerms()) isValid = false;
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

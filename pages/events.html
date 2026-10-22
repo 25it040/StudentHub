@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | StudentHub</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .search-bar {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-bar input,
+        .search-bar select {
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .event-banner {
+            height: 8px;
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
+        }
+
+        .event-content {
+            padding: 25px;
+        }
+
+        .event-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            margin-bottom: 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .event-card h3 {
+            color: #1d2b42;
+            margin-bottom: 10px;
+        }
+
+        .event-card p {
+            margin: 7px 0;
+            color: #475569;
+        }
+
+        .status-box {
+            margin-bottom: 20px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            color: #475569;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+
+        .pagination button {
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        @media(max-width: 768px) {
+            .search-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <script>if (localStorage.getItem("theme") === "dark") { document.documentElement.classList.add('dark-theme'); }</script>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header>
+        <img src="../image/image-removebg-preview.png" alt="StudentHub Official Portal Logo" width="100">
+        <h1>Campus Events</h1>
+        <p>Explore, Learn, and Grow with StudentHub Events.</p>
+    </header>
+
+    <nav aria-label="StudentHub Main Navigation">
+        <button class="hamburger" aria-label="Toggle navigation menu">☰</button>
+        <div id="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="register_user.html">Register</a>
+            <a href="login.php">Login</a>
+            <a href="dashboard.php">Dashboard</a>
+            <a href="events.html">Events</a>
+            <a href="students.php">Students</a>
+            <a href="profile.html">Profile</a>
+            <a href="contact.html">Contact</a>
+            <a href="admin.php">Admin</a>
+            <a href="faq.html">FAQ</a>
+            <a href="feedback.html">Feedback</a>
+            <button id="theme-toggle" style="margin-left: 10px; padding: 8px 14px; font-weight: 600;">🌙 Dark Mode</button>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <div class="events-stats">
+            <div class="stat-card">
+                <h2>🎉 15</h2>
+                <p>Total Events</p>
+            </div>
+            <div class="stat-card">
+                <h2>🟢 6</h2>
+                <p>Open for Registration</p>
+            </div>
+            <div class="stat-card">
+                <h2>📅 4</h2>
+                <p>This Month</p>
+            </div>
+            <div class="stat-card">
+                <h2>🏆 5</h2>
+                <p>Completed</p>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="eventSearch" placeholder="🔍 Search events by title...">
+            <select id="eventCategory">
+                <option value="all">All Categories</option>
+                <option value="Workshop">Workshop</option>
+                <option value="Seminar">Seminar</option>
+                <option value="Hackathon">Hackathon</option>
+                <option value="Tech Talk">Tech Talk</option>
+            </select>
+            <select id="eventSort">
+                <option value="title-asc">Sort: Title A-Z</option>
+                <option value="title-desc">Sort: Title Z-A</option>
+                <option value="date-asc">Sort: Date Oldest</option>
+                <option value="date-desc">Sort: Date Newest</option>
+            </select>
+        </div>
+
+        <div id="eventStatus" class="status-box">Loading events...</div>
+        <div id="eventList" class="events-grid"></div>
+
+        <div class="pagination">
+            <button id="eventPrev" type="button">Previous</button>
+            <span id="eventPageInfo">Page 1</span>
+            <button id="eventNext" type="button">Next</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h2>🎓 StudentHub</h2>
+                <p>Your Digital Campus Portal for academics, events, workshops, and student life.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="events.html">Events</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="cookie-policy.html">Cookie Policy</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📧 smitmakwana6777@gmail.com</p>
+                <p>📞 +91 9998403012</p>
+                <p>📍 CHARUSAT University Campus, Changa, Gujarat - 388421</p>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">&copy; 2026 StudentHub | Designed by Smit Makwana</p>
+    </footer>
+
+    <script src="../javascripts/scripts.js"></script>
+    <script>
+        const itemsPerPage = 5;
+        let allEvents = [];
+        let currentPage = 1;
+
+        const eventSearch = document.getElementById('eventSearch');
+        const eventCategory = document.getElementById('eventCategory');
+        const eventSort = document.getElementById('eventSort');
+        const eventList = document.getElementById('eventList');
+        const eventStatus = document.getElementById('eventStatus');
+        const eventPrev = document.getElementById('eventPrev');
+        const eventNext = document.getElementById('eventNext');
+        const eventPageInfo = document.getElementById('eventPageInfo');
+
+        function updatePagination(totalPages) {
+            eventPrev.disabled = currentPage <= 1;
+            eventNext.disabled = currentPage >= totalPages;
+            eventPageInfo.textContent = 'Page ' + currentPage + ' of ' + totalPages;
+        }
+
+        function getFilteredEvents() {
+            let result = [...allEvents];
+            const searchText = eventSearch.value.trim().toLowerCase();
+            const selectedCategory = eventCategory.value;
+            const selectedSort = eventSort.value;
+
+            if (searchText !== '') {
+                result = result.filter(function (eventItem) {
+                    return eventItem.title.toLowerCase().includes(searchText);
+                });
+            }
+
+            if (selectedCategory !== 'all') {
+                result = result.filter(function (eventItem) {
+                    return eventItem.category === selectedCategory;
+                });
+            }
+
+            if (selectedSort === 'title-asc') {
+                result.sort(function (a, b) {
+                    return a.title.localeCompare(b.title);
+                });
+            } else if (selectedSort === 'title-desc') {
+                result.sort(function (a, b) {
+                    return b.title.localeCompare(a.title);
+                });
+            } else if (selectedSort === 'date-asc') {
+                result.sort(function (a, b) {
+                    return new Date(a.date) - new Date(b.date);
+                });
+            } else if (selectedSort === 'date-desc') {
+                result.sort(function (a, b) {
+                    return new Date(b.date) - new Date(a.date);
+                });
+            }
+
+            return result;
+        }
+
+        function renderEvents() {
+            const filteredEvents = getFilteredEvents();
+            const totalPages = Math.ceil(filteredEvents.length / itemsPerPage) || 1;
+            currentPage = Math.min(currentPage, totalPages);
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const pageEvents = filteredEvents.slice(startIndex, startIndex + itemsPerPage);
+
+            eventList.innerHTML = '';
+
+            if (pageEvents.length === 0) {
+                eventList.innerHTML = '<div class="empty-state">No events found.</div>';
+                eventStatus.textContent = 'No events found for the current search and filter.';
+                updatePagination(1);
+                return;
+            }
+
+            pageEvents.forEach(function (eventItem) {
+                const card = document.createElement('div');
+                card.className = 'event-card';
+
+                const banner = document.createElement('div');
+                banner.className = 'event-banner';
+
+                const body = document.createElement('div');
+                body.className = 'event-content';
+
+                const badge = document.createElement('span');
+                badge.className = 'event-badge';
+                badge.textContent = eventItem.category;
+
+                const title = document.createElement('h3');
+                title.textContent = eventItem.title;
+
+                const date = document.createElement('p');
+                date.textContent = '📅 Date: ' + eventItem.date;
+
+                const location = document.createElement('p');
+                location.textContent = '📍 Location: ' + eventItem.location;
+
+                const category = document.createElement('p');
+                category.textContent = '🏷️ Category: ' + eventItem.category;
+
+                body.appendChild(badge);
+                body.appendChild(title);
+                body.appendChild(date);
+                body.appendChild(location);
+                body.appendChild(category);
+
+                card.appendChild(banner);
+                card.appendChild(body);
+                eventList.appendChild(card);
+            });
+
+            eventStatus.textContent = 'Showing ' + (startIndex + 1) + ' to ' + Math.min(startIndex + pageEvents.length, filteredEvents.length) + ' of ' + filteredEvents.length + ' events';
+            updatePagination(totalPages);
+        }
+
+        function loadEvents() {
+            eventStatus.textContent = 'Loading events...';
+            eventList.innerHTML = '<div class="empty-state">Loading data...</div>';
+
+            fetch('../data/events.json')
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Failed to load events data.');
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    allEvents = data;
+                    currentPage = 1;
+                    renderEvents();
+                })
+                .catch(function (error) {
+                    eventList.innerHTML = '<div class="empty-state">Unable to load events data right now.</div>';
+                    eventStatus.textContent = error.message || 'Something went wrong while loading events.';
+                });
+        }
+
+        eventSearch.addEventListener('input', function () {
+            currentPage = 1;
+            renderEvents();
+        });
+
+        eventCategory.addEventListener('change', function () {
+            currentPage = 1;
+            renderEvents();
+        });
+
+        eventSort.addEventListener('change', function () {
+            currentPage = 1;
+            renderEvents();
+        });
+
+        eventPrev.addEventListener('click', function () {
+            if (currentPage > 1) {
+                currentPage -= 1;
+                renderEvents();
+            }
+        });
+
+        eventNext.addEventListener('click', function () {
+            const filteredEvents = getFilteredEvents();
+            const totalPages = Math.ceil(filteredEvents.length / itemsPerPage) || 1;
+            if (currentPage < totalPages) {
+                currentPage += 1;
+                renderEvents();
+            }
+        });
+
+        loadEvents();
+    </script>
+</body>
+</html>
