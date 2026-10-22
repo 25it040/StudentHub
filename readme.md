@@ -1,27 +1,51 @@
-# StudentHub
+# StudentHub Portal - PHP + MySQL
 
-StudentHub is a vanilla HTML/CSS/JavaScript and PHP/MySQL academic portal project for XAMPP. The visual identity of the original home page is retained while the internal portal experience, responsive navigation, client validation and server-side authentication baseline have been added.
+This version keeps the original StudentHub visual design and adds a working PHP/MySQL backend.
 
-## Run locally with XAMPP
+## Folder structure
 
-1. Copy the project to `xampp/htdocs/studenthub` (or configure an Apache virtual host).
-2. Start Apache and MySQL in XAMPP.
-3. Open phpMyAdmin and import `database/schema.sql`.
-4. Copy `config/config.example.php` to `config/config.php`; set the local database credentials. This file is ignored by Git.
-5. Visit `http://localhost/studenthub/pages/index.html`.
+- `index.php` - project entry point
+- `pages/` - StudentHub pages
+- `backend/` - PHP authentication, forms, event registration and admin actions
+- `database/studenthub.sql` - single SQL database file
+- `css/style.css` - original frontend stylesheet
+- `css/forms.css` - additional styles for forms/data cards
 
-## Included functionality
+## Setup with XAMPP
 
-- Accessible, responsive shared navigation and page layouts.
-- Searchable attendance and assignment tables using vanilla JavaScript.
-- Fetch-based registration and login forms that only display success after an API response.
-- Prepared statements, `password_hash`, `password_verify`, session regeneration, role helper, CSRF helper and audit logging foundation.
-- MySQL users, students, events and audit-log schema.
+1. Install/start **Apache** and **MySQL** in XAMPP.
+2. Copy the `StudentHub-main` folder into `C:\xampp\htdocs\`.
+3. Open phpMyAdmin: `http://localhost/phpmyadmin`
+4. Import `database/studenthub.sql`.
+5. Check `backend/config.php`. Default XAMPP settings are:
+   - host: `localhost`
+   - database: `studenthub`
+   - username: `root`
+   - password: empty
+6. Open: `http://localhost/StudentHub-main/`
+7. Create an administrator using `backend/setup_admin.php`.
+8. After creating the admin, delete `backend/setup_admin.php` for safety.
+9. Login using the admin account. Students can register from the Register page.
 
-## Important scope notes
+## Main features
 
-The dashboard, academic records and notices currently display **demonstration data**; they are labelled as such and are not presented as live records. The authentication API requires MySQL configuration before it can run. Event CRUD, poster upload, administrator interface and academic-record APIs remain future implementation work; see `docs/PRACTICAL_STATUS.md`.
+- Student registration/login/logout
+- Password hashing with PHP `password_hash`
+- Session-based authentication
+- Student dashboard
+- Profile update
+- Event listing/search
+- Event registration with capacity checking
+- Contact form saved to MySQL
+- Feedback form saved to MySQL
+- Admin dashboard
+- Admin event add/hide/show/delete
+- Admin student enable/disable
+- Prepared SQL statements
+- Basic input validation
 
-## Security notes
+## Important
 
-Never commit `config/config.php`. All future state-changing endpoints must call `require_csrf()`, all output from a database must be escaped with `htmlspecialchars`, and uploads must be MIME-checked, size-limited, randomly named and stored outside the executable web root where possible.
+The database is MySQL/MariaDB. The SQL file creates the `studenthub` database and all required tables.
+
+For production hosting, change database credentials, enable HTTPS, add CSRF protection, and use a restricted database user.
